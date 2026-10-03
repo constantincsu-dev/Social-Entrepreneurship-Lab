@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ruhepuls</title>
+<meta name="description" content="ruhepuls: Kostenlose Interview-Prep von Professionals, Executives und Personaler:innen. Mentor:in finden, Termin buchen, entspannt ins Gespräch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: offener Hero mit Live-Puls, darunter ein Such-Werkzeug (Filter + Karten) und ein Buchungsdialog mit Slot-Kalender */
+:root {
+  --bg: #F2F3F7;
+  --surface: #FFFFFF;
+  --surface-2: #E8E9F2;
+  --ink: #15162B;
+  --muted: #5B5E78;
+  --line: #D9DBE7;
+  --cobalt: #3A36F5;
+  --on-cobalt: #FFFFFF;
+  --coral: #FF6F4F;
+  --sun: #FFD449;
+  --on-sun: #15162B;
+  --mint: #1FAE85;
+  --mint-soft: #D5F3E8;
+  --coral-soft: #FFE3DB;
+  --cobalt-soft: #E3E2FF;
+  --shadow: 0 1px 2px rgba(21,22,43,.06), 0 8px 28px rgba(21,22,43,.08);
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 14px;
+  --r-lg: 24px;
+  --wrap: 1180px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E0F1E; --surface: #181A2E; --surface-2: #22243C; --ink: #F1F1FA; --muted: #A4A7C4;
+    --line: #2E3150; --cobalt: #8F8CFF; --on-cobalt: #0E0F1E; --coral: #FF8C70; --sun: #FFD95E; --on-sun: #15162B;
+    --mint: #4BDDB0; --mint-soft: #173A33; --coral-soft: #3D2320; --cobalt-soft: #26254F;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E0F1E; --surface: #181A2E; --surface-2: #22243C; --ink: #F1F1FA; --muted: #A4A7C4;
+  --line: #2E3150; --cobalt: #8F8CFF; --on-cobalt: #0E0F1E; --coral: #FF8C70; --sun: #FFD95E; --on-sun: #15162B;
+  --mint: #4BDDB0; --mint-soft: #173A33; --coral-soft: #3D2320; --cobalt-soft: #26254F;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+a { color: var(--cobalt); }
+h1, h2, h3, h4 { font-family: var(--f-display); line-height: 1.08; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+p { margin: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; border-radius: 6px; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: 20px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+section { padding-block: 72px; }
+.section-head { display: grid; gap: 12px; max-width: 680px; margin-bottom: 36px; }
+.section-head h2 { font-size: clamp(30px, 4.4vw, 48px); font-weight: 800; }
+.section-head p { color: var(--muted); font-size: 18px; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 0; border-radius: 999px; padding: 13px 22px; font-weight: 700; cursor: pointer;
+  text-decoration: none; transition: transform .15s ease, background .15s ease, box-shadow .15s ease; white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--cobalt); color: var(--on-cobalt); }
+.btn-primary:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--cobalt) 35%, transparent); }
+.btn-sun { background: var(--sun); color: var(--on-sun); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-sm { padding: 9px 16px; font-size: 14px; }
+
+/* Demo banner + Nav */
+.demo-bar { background: var(--ink); color: var(--bg); font-size: 13px; text-align: center; padding: 8px 16px; }
+.demo-bar b { color: var(--sun); }
+header.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-in { display: flex; align-items: center; gap: 20px; height: 66px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--f-display); font-weight: 800; font-size: 24px; letter-spacing: -0.03em; }
+.logo svg { width: 34px; height: 22px; }
+.nav-links { display: flex; gap: 22px; margin-left: auto; }
+.nav-links a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; }
+.nav-links a:hover { color: var(--cobalt); }
+.nav-cta { display: flex; gap: 10px; align-items: center; }
+.badge { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--coral); color: #fff; font-size: 12px; font-weight: 700; }
+@media (max-width: 900px) { .nav-links { display: none; } .nav-cta { margin-left: auto; } }
+@media (max-width: 480px) { .nav-cta .btn-primary { display: none; } }
+
+/* Hero */
+.hero { padding-block: 56px 72px; }
+.hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+.hero-grid > * { min-width: 0; }
+.hero h1 { font-size: clamp(42px, 7vw, 84px); font-weight: 800; letter-spacing: -0.04em; }
+.hero h1 .hl { color: var(--cobalt); position: relative; white-space: nowrap; }
+.hero h1 .hl::after { content: ""; position: absolute; left: 0; right: 0; bottom: .06em; height: .16em; background: var(--sun); z-index: -1; border-radius: 4px; }
+.hero h1 .hl { z-index: 0; isolation: isolate; }
+.hero .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 560px; margin-top: 20px; }
+.search {
+  margin-top: 30px; display: grid; grid-template-columns: 1.4fr 1fr auto; gap: 6px;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: 20px; padding: 6px; box-shadow: var(--shadow);
+}
+.search label { display: grid; gap: 0; padding: 8px 14px; border-radius: 14px; min-width: 0; }
+.search label:focus-within { background: var(--surface-2); }
+.search label span { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.search input, .search select { border: 0; background: transparent; padding: 2px 0; outline: none; font-size: 16px; font-weight: 600; width: 100%; min-width: 0; }
+.search .btn { border-radius: 14px; padding-inline: 26px; }
+@media (max-width: 640px) { .search { grid-template-columns: 1fr; } .search .btn { padding-block: 15px; } }
+.quick { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; align-items: center; }
+.quick > span { font-size: 14px; color: var(--muted); margin-right: 4px; }
+.chip {
+  border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 13px;
+  font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s ease;
+}
+.chip:hover { border-color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* Pulse card */
+.pulse-card { background: var(--ink); color: var(--bg); border-radius: var(--r-lg); padding: 22px; position: relative; overflow: hidden; box-shadow: var(--shadow); }
+.pulse-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.pulse-label { font-family: var(--f-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; opacity: .7; }
+.bpm { font-family: var(--f-display); font-weight: 800; font-size: 64px; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.bpm small { font-family: var(--f-mono); font-size: 14px; font-weight: 600; letter-spacing: 0; opacity: .7; margin-left: 6px; }
+.state-pill { font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: var(--coral); color: #fff; transition: background .4s ease; white-space: nowrap; }
+.state-pill.calm { background: var(--mint); color: #0E0F1E; }
+#ecg { width: 100%; height: 150px; display: block; margin-top: 10px; }
+.pulse-foot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+.pulse-foot div { background: color-mix(in srgb, var(--bg) 8%, transparent); border-radius: 12px; padding: 10px 12px; }
+.pulse-foot b { display: block; font-family: var(--f-display); font-size: 22px; }
+.pulse-foot span { font-size: 12px; opacity: .7; }
+.pulse-note { font-size: 11px; opacity: .55; margin-top: 10px; }
+@media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+
+/* Problem strip */
+.problems { padding-block: 0 24px; }
+.problem-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.problem { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; display: grid; gap: 8px; }
+.problem q { font-family: var(--f-display); font-weight: 700; font-size: 20px; line-height: 1.2; quotes: "„" "“"; }
+.problem span { font-size: 14px; color: var(--muted); }
+@media (max-width: 800px) { .problem-row { grid-template-columns: 1fr; } }
+
+/* Steps */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: s; }
+.step { position: relative; padding: 26px; border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line); display: grid; gap: 10px; align-content: start; }
+.step-num { font-family: var(--f-mono); font-weight: 600; font-size: 13px; color: var(--cobalt); }
+.step h3 { font-size: 26px; font-weight: 700; }
+.step p { color: var(--muted); }
+.step .mini { margin-top: 8px; background: var(--surface-2); border-radius: 12px; padding: 12px; font-size: 14px; display: grid; gap: 6px; }
+.mini-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.mini-slot { font-family: var(--f-mono); font-size: 12px; padding: 4px 8px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); }
+.mini-slot.on { background: var(--cobalt); color: var(--on-cobalt); border-color: var(--cobalt); }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
+
+/* Directory */
+#finden { background: var(--surface-2); border-block: 1px solid var(--line); }
+.dir-grid { display: grid; grid-template-columns: 270px 1fr; gap: 28px; align-items: start; }
+.dir-grid > * { min-width: 0; }
+.filters { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 84px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px; display: grid; gap: 20px; }
+.filters h4 { font-family: var(--f-body); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 10px; }
+.filters .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters .chip { font-size: 13px; padding: 5px 11px; }
+.field { display: grid; gap: 6px; }
+.field label, .field .lbl { font-size: 13px; font-weight: 700; color: var(--muted); }
+.input, .select, textarea.input {
+  width: 100%; border: 1.5px solid var(--line); background: var(--surface); border-radius: 12px; padding: 11px 13px; font-size: 15px; outline: none; transition: border .15s ease;
+}
+.input:focus, .select:focus { border-color: var(--cobalt); }
+.toggle { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 14px; font-weight: 600; cursor: pointer; }
+.toggle input { appearance: none; width: 42px; height: 24px; border-radius: 999px; background: var(--line); position: relative; cursor: pointer; transition: background .2s ease; flex: none; }
+.toggle input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--surface); transition: transform .2s ease; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.toggle input:checked { background: var(--mint); }
+.toggle input:checked::after { transform: translateX(18px); }
+.filter-toggle { display: none; }
+@media (max-width: 960px) {
+  .dir-grid { grid-template-columns: 1fr; }
+  .filters { position: static; }
+  .filters.collapsed > :not(.filters-head) { display: none; }
+  .filter-toggle { display: inline-flex; }
+}
+.filters-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.filters-head b { font-family: var(--f-display); font-size: 20px; }
+.link-btn { background: none; border: 0; color: var(--cobalt); font-weight: 700; cursor: pointer; font-size: 14px; padding: 4px; }
+
+.results-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
+.results-head .count { font-weight: 700; font-size: 18px; }
+.results-head .count span { color: var(--muted); font-weight: 500; }
+.results-head .select { width: auto; padding: 8px 12px; font-size: 14px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px;
+  display: grid; grid-template-rows: auto auto 1fr auto; gap: 14px; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: transparent; }
+.card-top { display: flex; gap: 14px; align-items: center; }
+.avatar {
+  width: 56px; height: 56px; border-radius: 18px; flex: none; display: grid; place-items: center;
+  font-family: var(--f-display); font-weight: 800; font-size: 20px; color: #15162B; position: relative;
+}
+.avatar.lg { width: 84px; height: 84px; border-radius: 26px; font-size: 30px; }
+.avatar .online { position: absolute; right: -3px; bottom: -3px; width: 16px; height: 16px; border-radius: 50%; background: var(--mint); border: 3px solid var(--surface); }
+.card-top > div { min-width: 0; }
+.card h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+.role { font-size: 14px; color: var(--muted); line-height: 1.35; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 12px; font-weight: 700; padding: 4px 9px; border-radius: 8px; background: var(--cobalt-soft); color: var(--ink); }
+.tag.ind { background: var(--sun); color: var(--on-sun); }
+.card-quote { font-size: 14.5px; color: var(--muted); }
+.card-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--muted); }
+.card-meta b { color: var(--ink); }
+.card-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding-top: 14px; border-top: 1px dashed var(--line); }
+.next-slot { font-size: 12px; color: var(--muted); line-height: 1.3; }
+.next-slot b { display: block; font-family: var(--f-mono); font-size: 13px; color: var(--mint); font-weight: 600; }
+.empty { background: var(--surface); border: 1.5px dashed var(--line); border-radius: var(--r-lg); padding: 40px; text-align: center; display: grid; gap: 12px; justify-items: center; }
+.empty h3 { font-size: 24px; }
+.empty p { color: var(--muted); max-width: 420px; }
+
+/* Calm module */
+.calm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.calm-grid > * { min-width: 0; }
+.breath-box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 28px; display: grid; justify-items: center; gap: 18px; }
+.breath-stage { width: min(280px, 100%); aspect-ratio: 1; position: relative; display: grid; place-items: center; max-width: 100%; }
+.breath-square { position: absolute; inset: 8%; border: 2px dashed var(--line); border-radius: 28px; }
+.breath-blob { width: 46%; aspect-ratio: 1; border-radius: 34%; background: var(--mint); display: grid; place-items: center; transition: transform 4s ease-in-out, background .6s ease; transform: scale(1); }
+.breath-blob.in { transform: scale(1.6); }
+.breath-blob span { font-family: var(--f-display); font-weight: 800; font-size: 34px; color: #0E0F1E; font-variant-numeric: tabular-nums; }
+.breath-text { font-family: var(--f-display); font-weight: 700; font-size: 24px; min-height: 1.3em; text-align: center; }
+.calm-list { display: grid; gap: 14px; margin-top: 24px; padding: 0; list-style: none; }
+.calm-list li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
+.calm-list .ic { width: 34px; height: 34px; border-radius: 10px; background: var(--mint-soft); color: var(--mint); display: grid; place-items: center; }
+.calm-list .ic svg { width: 18px; height: 18px; }
+.calm-list b { display: block; }
+.calm-list span { color: var(--muted); font-size: 15px; }
+@media (max-width: 860px) { .calm-grid { grid-template-columns: 1fr; } }
+
+/* Mentor werden */
+#mentor-werden { background: var(--ink); color: var(--bg); }
+#mentor-werden .eyebrow { color: var(--sun); }
+#mentor-werden .section-head p { color: color-mix(in srgb, var(--bg) 70%, transparent); }
+.become-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.become-grid > * { min-width: 0; }
+.perks { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.perk { border: 1px solid color-mix(in srgb, var(--bg) 18%, transparent); border-radius: var(--r); padding: 18px; display: grid; gap: 6px; }
+.perk b { font-family: var(--f-display); font-size: 30px; color: var(--sun); line-height: 1; }
+.perk span { font-size: 14px; color: color-mix(in srgb, var(--bg) 72%, transparent); }
+.become-form { background: var(--surface); color: var(--ink); border-radius: var(--r-lg); padding: 26px; display: grid; gap: 14px; }
+.become-form h3 { font-size: 24px; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.row-2 > * { min-width: 0; }
+.daypick { display: flex; gap: 6px; flex-wrap: wrap; }
+.daypick .chip { min-width: 44px; text-align: center; }
+@media (max-width: 860px) { .become-grid { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .row-2, .perks { grid-template-columns: 1fr; } }
+
+/* FAQ */
+.faq { display: grid; gap: 10px; max-width: 820px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 4px 20px; }
+.faq summary { cursor: pointer; font-weight: 700; font-size: 18px; padding-block: 14px; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-mono); color: var(--cobalt); font-size: 20px; line-height: 1; transition: transform .2s ease; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { color: var(--muted); padding-bottom: 16px; max-width: 65ch; }
+
+footer { padding-block: 40px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+.foot-in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center; }
+
+/* Dialogs */
+dialog { border: 0; padding: 0; background: transparent; color: var(--ink); max-width: min(980px, calc(100vw - 24px)); width: 100%; max-height: calc(100dvh - 24px); }
+dialog::backdrop { background: rgba(14,15,30,.55); backdrop-filter: blur(4px); }
+.modal { background: var(--surface); border-radius: var(--r-lg); overflow: hidden; display: grid; grid-template-columns: 1fr 1.15fr; max-height: calc(100dvh - 24px); }
+.modal > * { min-width: 0; }
+.m-profile { padding: 28px; background: var(--surface-2); overflow-y: auto; display: grid; gap: 18px; align-content: start; }
+.m-booking { padding: 28px; overflow-y: auto; display: grid; gap: 18px; align-content: start; position: relative; }
+.m-close { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 20px; line-height: 1; z-index: 2; }
+.m-profile h3 { font-size: 30px; font-weight: 800; }
+.m-profile .bio { font-size: 15px; color: var(--muted); }
+.m-sub { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 15px; }
+.checklist li { display: flex; gap: 10px; }
+.checklist li::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 3px; border-radius: 6px; background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E0F1E' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center/12px no-repeat; }
+.stats3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stats3 div { background: var(--surface); border-radius: 12px; padding: 10px; text-align: center; }
+.stats3 b { display: block; font-family: var(--f-display); font-size: 22px; }
+.stats3 span { font-size: 12px; color: var(--muted); }
+.m-booking h4 { font-family: var(--f-display); font-size: 24px; font-weight: 700; padding-right: 40px; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seg label { border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 12px; cursor: pointer; display: grid; gap: 2px; transition: all .15s ease; }
+.seg label b { font-size: 15px; }
+.seg label span { font-size: 12.5px; color: var(--muted); }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label:has(input:checked) { border-color: var(--cobalt); background: var(--cobalt-soft); }
+.seg label:has(input:focus-visible) { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+.days { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+.day {
+  flex: none; width: 64px; border: 1.5px solid var(--line); background: var(--surface); border-radius: 14px; padding: 8px 4px; cursor: pointer; display: grid; justify-items: center; gap: 1px;
+}
+.day small { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: .05em; }
+.day b { font-family: var(--f-display); font-size: 22px; line-height: 1.1; }
+.day i { font-style: normal; font-size: 11px; color: var(--mint); font-weight: 700; }
+.day:disabled { opacity: .4; cursor: not-allowed; }
+.day:disabled i { color: var(--muted); }
+.day[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.day[aria-pressed="true"] small { color: inherit; opacity: .7; }
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; }
+.slot { font-family: var(--f-mono); font-weight: 600; font-size: 14px; padding: 10px 6px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--surface); cursor: pointer; transition: all .12s ease; }
+.slot:hover { border-color: var(--cobalt); }
+.slot[aria-pressed="true"] { background: var(--cobalt); color: var(--on-cobalt); border-color: var(--cobalt); }
+.form-err { color: var(--coral); font-size: 14px; font-weight: 600; }
+.summary-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; background: var(--surface-2); border-radius: 14px; padding: 12px 14px; }
+.summary-bar .when { font-family: var(--f-mono); font-size: 14px; font-weight: 600; }
+.summary-bar .when span { display: block; font-family: var(--f-body); font-weight: 500; font-size: 12px; color: var(--muted); }
+.success { display: grid; gap: 16px; justify-items: start; }
+.success-ic { width: 64px; height: 64px; border-radius: 20px; background: var(--mint); display: grid; place-items: center; animation: pop .5s cubic-bezier(.2,1.6,.4,1); }
+.success-ic svg { width: 34px; height: 34px; }
+@keyframes pop { from { transform: scale(.4); } to { transform: scale(1); } }
+.ticket { width: 100%; border: 1.5px dashed var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 8px; font-size: 15px; }
+.ticket div { display: flex; justify-content: space-between; gap: 12px; }
+.ticket div span { color: var(--muted); }
+.ticket div b { text-align: right; }
+.ticket code { font-family: var(--f-mono); font-size: 13px; background: var(--surface-2); padding: 2px 6px; border-radius: 6px; }
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+@media (max-width: 820px) {
+  .modal { grid-template-columns: 1fr; overflow-y: auto; }
+  .m-profile, .m-booking { overflow: visible; }
+}
+
+/* Drawer: Meine Termine */
+.drawer { background: var(--surface); border-radius: var(--r-lg); padding: 26px; display: grid; gap: 16px; position: relative; max-width: 560px; margin: 0 auto; }
+#termineDlg { max-width: min(560px, calc(100vw - 24px)); }
+.booking-item { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
+.booking-item > div { min-width: 0; }
+.booking-item .avatar { width: 46px; height: 46px; border-radius: 14px; font-size: 16px; }
+.booking-item .w { font-family: var(--f-mono); font-size: 13px; color: var(--cobalt); font-weight: 600; }
+.booking-item small { color: var(--muted); }
+
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 12px; font-weight: 600; font-size: 15px; opacity: 0; pointer-events: none; transition: all .25s ease; z-index: 100; max-width: calc(100vw - 32px); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="demo-bar"><b>Demo-Prototyp</b> · Alle Profile, Bewertungen und Termine sind fiktiv. Buchungen bleiben nur in deinem Browser.</div>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top" aria-label="ruhepuls Startseite">
+      <svg viewBox="0 0 34 22" fill="none" aria-hidden="true"><path d="M1 13h7l3-9 5 16 4-11 2 4h11" stroke="var(--cobalt)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      ruhepuls
+    </a>
+    <nav class="nav-links" aria-label="Hauptnavigation">
+      <a href="#so-gehts">So geht's</a>
+      <a href="#finden">Mentor:innen finden</a>
+      <a href="#ruhe">Ruhe-Check</a>
+      <a href="#mentor-werden">Mentor:in werden</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="btn btn-ghost btn-sm" id="openTermine" type="button">Meine Termine <span class="badge" id="termineCount" hidden>0</span></button>
+      <a class="btn btn-primary btn-sm" href="#finden">Prep finden</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Kostenlose Interview-Prep · von Profis, für dich</div>
+        <h1 style="margin-top:14px">Bewerbungs&shy;stress? Wir senken deinen <span class="hl">Puls.</span></h1>
+        <p class="lead">Professionals, Executives und Personaler:innen bereiten dich ehrenamtlich auf genau das Interview vor, das vor dir liegt. Such dir jemanden aus deinem Zielbereich, buch einen Slot im Kalender und geh entspannt ins Gespräch.</p>
+
+        <form class="search" id="heroSearch" role="search">
+          <label for="heroQ"><span>Worauf bewirbst du dich?</span>
+            <input id="heroQ" type="text" placeholder="z. B. Werkstudent Consulting" autocomplete="off">
+          </label>
+          <label for="heroInd"><span>Bereich</span>
+            <select id="heroInd"></select>
+          </label>
+          <button class="btn btn-primary" type="submit">Prep finden</button>
+        </form>
+        <div class="quick" id="quickChips"><span>Beliebt:</span></div>
+      </div>
+
+      <div class="pulse-card" aria-label="Animation: Puls vor und nach der Interview-Prep">
+        <div class="pulse-top">
+          <div>
+            <div class="pulse-label">Dein Puls vor dem Interview</div>
+            <div class="bpm"><span id="bpm">118</span><small>bpm</small></div>
+          </div>
+          <span class="state-pill" id="statePill">Ohne Prep</span>
+        </div>
+        <canvas id="ecg" aria-hidden="true"></canvas>
+        <div class="pulse-foot">
+          <div><b id="mentorCount">16</b><span>Mentor:innen</span></div>
+          <div><b>11</b><span>Branchen</span></div>
+          <div><b>0 €</b><span>für dich</span></div>
+        </div>
+        <p class="pulse-note">Illustration. Die Pulswerte sind keine Messdaten.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="problems" aria-label="Typische Stressmomente">
+    <div class="wrap problem-row">
+      <div class="problem"><q>Was, wenn ich bei der Gehaltsfrage einfach blockiere?</q><span>Gehaltsverhandlung üben, bevor es zählt.</span></div>
+      <div class="problem"><q>Ich weiß nicht mal, wie ein Case Interview abläuft.</q><span>Insider zeigen dir das Format von innen.</span></div>
+      <div class="problem"><q>In meinem Umfeld arbeitet niemand in dieser Branche.</q><span>Hier findest du die Kontakte, die dir fehlen.</span></div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section id="so-gehts">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">So geht's</div>
+        <h2>In drei Schritten vom Herzrasen zum Ruhepuls.</h2>
+        <p>Kein Abo, keine versteckten Kosten. Die Mentor:innen schenken dir ihre Zeit, weil sie selbst wissen, wie sich das erste große Interview anfühlt.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">Schritt 1</span>
+          <h3>Ziel eingeben</h3>
+          <p>Sag uns, worauf du dich bewirbst: Ausbildung, Praktikum, erster Job oder der nächste Karriereschritt.</p>
+          <div class="mini"><div class="mini-row"><span class="tag ind">Consulting</span><span class="tag">Case Interview</span><span class="tag">Praktikum</span></div></div>
+        </div>
+        <div class="step">
+          <span class="step-num">Schritt 2</span>
+          <h3>Mentor:in wählen</h3>
+          <p>Filtere nach Branche, Interviewformat und Sprache. Jedes Profil zeigt, worauf du konkret vorbereitet wirst.</p>
+          <div class="mini"><div class="mini-row"><span class="tag">Behavioral</span><span class="tag">Gehalt</span><span class="tag">Assessment Center</span></div></div>
+        </div>
+        <div class="step">
+          <span class="step-num">Schritt 3</span>
+          <h3>Slot buchen</h3>
+          <p>Freien Termin im Kalender anklicken, kurz sagen, worum es geht, fertig. Der Link zum Video-Call kommt per Mail.</p>
+          <div class="mini"><div class="mini-row"><span class="mini-slot">17:30</span><span class="mini-slot on">18:00</span><span class="mini-slot">18:30</span><span class="mini-slot">19:00</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIRECTORY -->
+  <section id="finden">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Mentor:innen finden</div>
+        <h2>Wer bereitet dich vor?</h2>
+        <p>Echte Menschen aus der Praxis, die in genau den Interviews sitzen, vor denen du Respekt hast.</p>
+      </div>
+      <div class="dir-grid">
+        <aside class="filters collapsed" id="filters" aria-label="Filter">
+          <div class="filters-head">
+            <b>Filter</b>
+            <div>
+              <button class="link-btn" type="button" id="resetFilters">Zurücksetzen</button>
+              <button class="btn btn-ghost btn-sm filter-toggle" type="button" id="filterToggle" aria-expanded="false">Anzeigen</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="q">Suche</label>
+            <input class="input" id="q" type="search" placeholder="Job, Thema, Name …" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="ind">Bereich</label>
+            <select class="select" id="ind"></select>
+          </div>
+          <div><h4>Interviewformat</h4><div class="chips" id="typeChips"></div></div>
+          <div><h4>Karrierestufe</h4><div class="chips" id="levelChips"></div></div>
+          <div><h4>Sprache</h4><div class="chips" id="langChips"></div></div>
+          <label class="toggle" for="soon">Freie Slots in den nächsten 3 Tagen <input type="checkbox" id="soon"></label>
+        </aside>
+
+        <div>
+          <div class="results-head">
+            <div class="count" id="count" aria-live="polite"></div>
+            <label for="sort" class="sr-only" style="position:absolute;left:-9999px">Sortieren</label>
+            <select class="select" id="sort">
+              <option value="soon">Früheste Verfügbarkeit</option>
+              <option value="rating">Beste Bewertung</option>
+              <option value="sessions">Meiste Sessions</option>
+            </select>
+          </div>
+          <div class="cards" id="cards"></div>
+          <div class="empty" id="empty" hidden>
+            <h3>Noch niemand für diese Kombi.</h3>
+            <p>Lockere ein paar Filter oder probier einen allgemeineren Suchbegriff. Wir holen laufend neue Mentor:innen an Bord.</p>
+            <button class="btn btn-primary btn-sm" type="button" id="emptyReset">Filter zurücksetzen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALM -->
+  <section id="ruhe">
+    <div class="wrap calm-grid">
+      <div>
+        <div class="eyebrow">Ruhe-Check</div>
+        <div class="section-head" style="margin:12px 0 0">
+          <h2>60 Sekunden vor dem Call.</h2>
+          <p>Box Breathing: vier Sekunden ein, halten, aus, halten. Eine einfache Atemübung, die viele vor wichtigen Gesprächen nutzen. Probier sie direkt hier aus.</p>
+        </div>
+        <ul class="calm-list">
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span><div><b>Zehn Minuten vorher einloggen</b><span>Technik checken, Wasser bereitstellen, Benachrichtigungen aus.</span></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h7"/></svg></span><div><b>Drei Stories parat haben</b><span>Erfolg, Konflikt, Fehler. Deine Mentor:in hilft dir, sie zu schärfen.</span></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 10h.01M16 10h.01M8 15c2.5 2 5.5 2 8 0"/><circle cx="12" cy="12" r="9"/></svg></span><div><b>Eine eigene Frage vorbereiten</b><span>Zeigt Interesse und gibt dir einen Moment zum Durchatmen.</span></div></li>
+        </ul>
+      </div>
+      <div class="breath-box">
+        <div class="breath-stage">
+          <div class="breath-square"></div>
+          <div class="breath-blob" id="blob"><span id="breathCount">4</span></div>
+        </div>
+        <div class="breath-text" id="breathText">Bereit, wenn du es bist.</div>
+        <button class="btn btn-primary" id="breathBtn" type="button">Übung starten</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BECOME MENTOR -->
+  <section id="mentor-werden">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Mentor:in werden</div>
+        <h2>Eine Stunde im Monat. Ein Mensch weniger mit Blackout.</h2>
+        <p>Du führst Interviews, stellst ein oder hast den Weg selbst gerade hinter dir? Gib dein Wissen weiter, ohne Aufwand für Orga oder Abrechnung.</p>
+      </div>
+      <div class="become-grid">
+        <div class="perks">
+          <div class="perk"><b>30 min</b><span>pro Session. Du entscheidest, wie viele Slots du freigibst.</span></div>
+          <div class="perk"><b>1 Klick</b><span>Kalender verbinden, Slots erscheinen automatisch auf deinem Profil.</span></div>
+          <div class="perk"><b>Impact</b><span>Sichtbar machen, wie viele Menschen du begleitet hast, z. B. für dein CSR-Profil.</span></div>
+          <div class="perk"><b>Netzwerk</b><span>Lerne motivierte Talente kennen, bevor es andere tun.</span></div>
+        </div>
+        <form class="become-form" id="becomeForm" novalidate>
+          <h3>Profil anlegen</h3>
+          <div class="row-2">
+            <div class="field"><label for="bName">Name</label><input class="input" id="bName" required placeholder="Vor- und Nachname"></div>
+            <div class="field"><label for="bRole">Rolle</label><input class="input" id="bRole" required placeholder="z. B. HR Business Partner"></div>
+          </div>
+          <div class="row-2">
+            <div class="field"><label for="bInd">Bereich</label><select class="select" id="bInd"></select></div>
+            <div class="field"><label for="bMail">E-Mail</label><input class="input" id="bMail" type="email" required placeholder="du@firma.de"></div>
+          </div>
+          <div class="field"><label for="bTopics">Deine Steckenpferd-Themen</label><input class="input" id="bTopics" placeholder="z. B. Case Interviews, Gehaltsverhandlung"></div>
+          <div class="field"><span class="lbl">An welchen Tagen hast du Zeit?</span>
+            <div class="daypick" id="bDays"></div>
+          </div>
+          <p class="form-err" id="bErr" hidden></p>
+          <button class="btn btn-primary" type="submit">Als Mentor:in bewerben</button>
+          <div class="success" id="bSuccess" hidden>
+            <p><b>Danke!</b> Wir melden uns innerhalb von 48 Stunden mit deinem Profil-Entwurf. <small>(Demo: Es wurde nichts versendet.)</small></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">FAQ</div>
+        <h2>Gute Fragen.</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Warum ist das kostenlos?</summary><p>ruhepuls ist ein Social-Entrepreneurship-Projekt. Mentor:innen engagieren sich ehrenamtlich, oft im Rahmen von Corporate-Volunteering-Programmen ihrer Arbeitgeber. Finanzieren wollen wir die Plattform über Unternehmenspartnerschaften, nie über Bewerber:innen.</p></details>
+        <details><summary>Wer sind die Mentor:innen?</summary><p>Professionals, Führungskräfte und Recruiter:innen, deren Profil wir vor der Freischaltung prüfen. Auf jedem Profil siehst du Rolle, Branche und die Themen, auf die sie dich vorbereiten.</p></details>
+        <details><summary>Wie läuft eine Session ab?</summary><p>Du wählst zwischen einem 30-minütigen Mock-Interview und einem 15-minütigen Quick-Check, zum Beispiel für deinen Lebenslauf oder eine konkrete Frage. Der Call findet per Video oder Telefon statt. Danach bekommst du kurzes, ehrliches Feedback.</p></details>
+        <details><summary>Ist das nicht ein Vorteil gegenüber anderen Bewerber:innen?</summary><p>Genau darum geht es: Viele haben Eltern, Freunde oder Alumni-Netzwerke, die sie vorbereiten. ruhepuls öffnet diesen Zugang für alle, unabhängig von Herkunft und Kontakten.</p></details>
+        <details><summary>Was passiert mit meinen Daten?</summary><p>In dieser Demo werden Buchungen nur lokal in deinem Browser gespeichert. In der echten Version teilen wir Name, E-Mail und deine Nachricht ausschließlich mit der gebuchten Mentor:in.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <a class="logo" href="#top" style="font-size:20px">
+      <svg viewBox="0 0 34 22" fill="none" aria-hidden="true"><path d="M1 13h7l3-9 5 16 4-11 2 4h11" stroke="var(--cobalt)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      ruhepuls
+    </a>
+    <span>Ein Projekt aus dem Social Entrepreneurship Lab · Demo-Version 2026</span>
+  </div>
+</footer>
+
+<!-- Booking dialog -->
+<dialog id="bookDlg" aria-labelledby="mName">
+  <div class="modal">
+    <div class="m-profile" id="mProfile"></div>
+    <div class="m-booking">
+      <button class="m-close" type="button" data-close aria-label="Schließen">×</button>
+      <form id="bookForm" novalidate>
+        <div style="display:grid;gap:18px">
+          <h4>Termin buchen</h4>
+          <div>
+            <div class="m-sub">Art der Session</div>
+            <div class="seg" id="segType">
+              <label><input type="radio" name="stype" value="mock" checked><b>Mock-Interview</b><span>30 min · realistische Simulation</span></label>
+              <label><input type="radio" name="stype" value="quick"><b>Quick-Check</b><span>15 min · CV oder eine Frage</span></label>
+            </div>
+          </div>
+          <div>
+            <div class="m-sub">Tag wählen</div>
+            <div class="days" id="days"></div>
+          </div>
+          <div>
+            <div class="m-sub" id="slotHead">Uhrzeit</div>
+            <div class="slots" id="slots"></div>
+          </div>
+          <div class="seg" id="segFormat">
+            <label><input type="radio" name="fmt" value="Video-Call" checked><b>Video-Call</b><span>Link kommt per Mail</span></label>
+            <label><input type="radio" name="fmt" value="Telefon"><b>Telefon</b><span>Mentor:in ruft dich an</span></label>
+          </div>
+          <div class="row-2">
+            <div class="field"><label for="fName">Dein Vorname</label><input class="input" id="fName" autocomplete="given-name" placeholder="Alex"></div>
+            <div class="field"><label for="fMail">E-Mail</label><input class="input" id="fMail" type="email" autocomplete="email" placeholder="alex@mail.de"></div>
+          </div>
+          <div class="field"><label for="fMsg">Worauf bewirbst du dich? <span style="font-weight:500">(optional)</span></label><textarea class="input" id="fMsg" rows="2" placeholder="z. B. Praktikum Strategieberatung, Interview am 15.10."></textarea></div>
+          <p class="form-err" id="bookErr" hidden></p>
+          <div class="summary-bar">
+            <div class="when" id="whenTxt">Noch kein Slot gewählt<span>Kostenlos · jederzeit stornierbar</span></div>
+            <button class="btn btn-primary" type="submit">Kostenlos buchen</button>
+          </div>
+        </div>
+      </form>
+      <div class="success" id="bookSuccess" hidden></div>
+    </div>
+  </div>
+</dialog>
+
+<!-- Meine Termine -->
+<dialog id="termineDlg" aria-labelledby="tHead">
+  <div class="drawer">
+    <button class="m-close" type="button" data-close aria-label="Schließen">×</button>
+    <h3 id="tHead" style="font-size:28px">Meine Termine</h3>
+    <div id="termineList" style="display:grid;gap:10px"></div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  /* ---------- Daten (fiktiv) ---------- */
+  const INDUSTRIES = ["Consulting", "Tech & Product", "Finance", "Marketing & Media", "HR & Recruiting", "Gesundheit & Pflege", "Ingenieurwesen", "Öffentlicher Dienst", "Ausbildung & Handwerk", "Recht", "Startups"];
+  const TYPES = ["Case Interview", "Behavioral / Fit", "Technisches Interview", "Gehaltsverhandlung", "Assessment Center", "Einstellungstest", "Portfolio & Präsentation"];
+  const LEVELS = ["Ausbildung", "Praktikum & Werkstudium", "Berufseinstieg", "Erfahren & Führung"];
+  const LANGS = ["Deutsch", "Englisch", "Türkisch", "Polnisch"];
+  const COLORS = ["#FFD449", "#8BE3C6", "#FFB39E", "#B9B6FF", "#9FD8FF", "#FFC9EC"];
+
+  const MENTORS = [
+    { id: "lb", name: "Leonie Brandt", role: "Senior Managerin", org: "Strategieberatung (Top-Tier)", ind: "Consulting", types: ["Case Interview", "Behavioral / Fit"], levels: ["Praktikum & Werkstudium", "Berufseinstieg"], langs: ["Deutsch", "Englisch"], kw: "unternehmensberatung berater consultant strategie mbb", quote: "Cases sind kein Hexenwerk. Ich zeig dir die Struktur, die in jedem Interview funktioniert.", prep: ["Marktgrößen-Schätzung live durchspielen", "Profitability-Case mit Feedback", "Fit-Fragen: Warum Beratung?"], bio: "Acht Jahre Beratung, seit drei Jahren im Recruiting-Team für Praktikant:innen und Berufseinsteiger:innen. Habe selbst drei Anläufe gebraucht.", rating: 4.9, sessions: 142, years: 8, days: [1, 3], hours: ["18:00", "18:30", "19:00", "19:30"] },
+    { id: "my", name: "Murat Yılmaz", role: "Engineering Manager", org: "E-Commerce-Scale-up", ind: "Tech & Product", types: ["Technisches Interview", "Behavioral / Fit"], levels: ["Praktikum & Werkstudium", "Berufseinstieg", "Erfahren & Führung"], langs: ["Deutsch", "Englisch", "Türkisch"], kw: "software engineer entwickler developer programmierer coding system design informatik", quote: "Live-Coding ohne Panik: Laut denken ist wichtiger als die perfekte Lösung.", prep: ["Live-Coding-Aufgabe mit Feedback", "System-Design-Grundlagen", "Wie du über Projekte erzählst"], bio: "Baue seit zwölf Jahren Software, führe heute zwei Teams und habe über 300 technische Interviews geführt.", rating: 4.8, sessions: 98, years: 12, days: [2, 4], hours: ["17:30", "18:00", "20:00"] },
+    { id: "sl", name: "Dr. Sophie Lindner", role: "Head of Talent Acquisition", org: "DAX-Konzern", ind: "HR & Recruiting", types: ["Behavioral / Fit", "Gehaltsverhandlung", "Assessment Center"], levels: ["Berufseinstieg", "Erfahren & Führung"], langs: ["Deutsch", "Englisch"], kw: "trainee traineeprogramm personal recruiting konzern hr", quote: "Ich verrate dir, was auf unserer Seite des Tisches wirklich zählt.", prep: ["Assessment-Center-Übungen simulieren", "Gehaltsband recherchieren und verhandeln", "STAR-Methode für Behavioral-Fragen"], bio: "Verantworte das Recruiting für über 2.000 Einstellungen pro Jahr, davon viele Traineeprogramme.", rating: 5.0, sessions: 211, years: 15, days: [1, 2, 5], hours: ["08:00", "08:30", "12:30"] },
+    { id: "jp", name: "Jonas Petersen", role: "Vice President M&A", org: "Investmentbank", ind: "Finance", types: ["Technisches Interview", "Case Interview"], levels: ["Praktikum & Werkstudium", "Berufseinstieg"], langs: ["Deutsch", "Englisch"], kw: "investment banking bank analyst m&a finanzen corporate finance valuation", quote: "DCF, Multiples, Brainteaser: Wir üben, bis es sich langweilig anfühlt.", prep: ["Valuation-Fragen von Basic bis Advanced", "Brainteaser unter Zeitdruck", "Deal-Diskussion vorbereiten"], bio: "Zehn Jahre M&A in Frankfurt und London. Sitze in jeder Praktikanten-Runde mit am Tisch.", rating: 4.7, sessions: 76, years: 10, days: [6, 0], hours: ["10:00", "10:30", "11:00", "11:30"] },
+    { id: "ao", name: "Amara Okafor", role: "Product Lead", org: "FinTech", ind: "Tech & Product", types: ["Case Interview", "Behavioral / Fit", "Portfolio & Präsentation"], levels: ["Berufseinstieg", "Erfahren & Führung"], langs: ["Englisch", "Deutsch"], kw: "product manager produktmanagement pm ux owner fintech", quote: "Product-Cases lieben Neugier. Ich zeige dir, wie du sie sichtbar machst.", prep: ["Product-Sense-Case", "Metriken und Priorisierung", "Take-Home-Präsentation pitchen"], bio: "Vom Werkstudium im Support zur Product Lead. Ich weiß, wie es ist, ohne Netzwerk in Tech einzusteigen.", rating: 4.9, sessions: 64, years: 7, days: [2, 3, 4], hours: ["19:00", "19:30", "20:00"] },
+    { id: "kw", name: "Katharina Weiß", role: "Pflegedienstleitung", org: "Universitätsklinikum", ind: "Gesundheit & Pflege", types: ["Behavioral / Fit", "Gehaltsverhandlung"], levels: ["Ausbildung", "Berufseinstieg", "Erfahren & Führung"], langs: ["Deutsch", "Polnisch"], kw: "pflege pflegefachkraft krankenhaus klinik ausbildung pflegefachfrau mfa gesundheit", quote: "Ihr seid gefragt. Lass uns üben, wie du das im Gespräch auch selbstbewusst zeigst.", prep: ["Typische Fragen im Klinik-Interview", "Schichtmodell und Tarif verstehen", "Situationsfragen aus dem Stationsalltag"], bio: "Seit 20 Jahren in der Pflege, heute verantwortlich für 400 Mitarbeitende. Führe jede Woche Vorstellungsgespräche.", rating: 4.9, sessions: 88, years: 20, days: [1, 4], hours: ["14:00", "14:30", "15:00"] },
+    { id: "fh", name: "Felix Hoffmann", role: "Ausbildungsleiter", org: "Mittelständischer Maschinenbauer", ind: "Ausbildung & Handwerk", types: ["Einstellungstest", "Behavioral / Fit"], levels: ["Ausbildung"], langs: ["Deutsch"], kw: "ausbildung azubi mechatroniker industriemechaniker handwerk einstellungstest duales studium", quote: "Einstellungstest und Gespräch: Ich zeig dir, worauf Ausbilder wirklich achten.", prep: ["Einstellungstest-Aufgaben üben", "Erstes Vorstellungsgespräch simulieren", "Was zieh ich an? Was frag ich?"], bio: "Habe selbst als Azubi angefangen und betreue heute 60 Auszubildende. Kein Gespräch ist zu klein.", rating: 5.0, sessions: 120, years: 18, days: [2, 3], hours: ["15:30", "16:00", "16:30"] },
+    { id: "ls", name: "Lena Schulz", role: "Senior Recruiterin", org: "Personalberatung", ind: "HR & Recruiting", types: ["Behavioral / Fit", "Gehaltsverhandlung"], levels: ["Praktikum & Werkstudium", "Berufseinstieg", "Erfahren & Führung"], langs: ["Deutsch", "Englisch"], kw: "lebenslauf cv anschreiben bewerbung recruiterin personalerin quereinstieg", quote: "Ich lese 50 Lebensläufe am Tag. Ich sag dir ehrlich, wo deiner hängen bleibt.", prep: ["CV-Check in 15 Minuten", "Lücken im Lebenslauf souverän erklären", "Gehaltsvorstellung formulieren"], bio: "Recruiterin für Marketing, Sales und Quereinsteiger:innen. Mein Lieblingsthema: Gehaltsverhandlung für Berufseinsteiger:innen.", rating: 4.8, sessions: 156, years: 6, days: [1, 2, 3, 4, 5], hours: ["12:00", "12:30"] },
+    { id: "dk", name: "Daniel Krüger", role: "Creative Director", org: "Digitalagentur", ind: "Marketing & Media", types: ["Portfolio & Präsentation", "Behavioral / Fit"], levels: ["Praktikum & Werkstudium", "Berufseinstieg"], langs: ["Deutsch", "Englisch"], kw: "design grafik art director agentur kreativ portfolio social media content", quote: "Dein Portfolio erzählt eine Geschichte. Ich helfe dir, sie in fünf Minuten zu pitchen.", prep: ["Portfolio-Review", "Präsentation vor Kund:innen üben", "Agentur-Alltag ehrlich erklärt"], bio: "Leite ein Kreativteam von 25 Leuten. Ich stelle nach Haltung ein, nicht nach Hochglanz.", rating: 4.6, sessions: 41, years: 11, days: [3, 5], hours: ["17:00", "17:30", "18:00"] },
+    { id: "mn", name: "Mira Novak", role: "Founder & CEO", org: "Climate-Tech-Startup", ind: "Startups", types: ["Case Interview", "Behavioral / Fit"], levels: ["Praktikum & Werkstudium", "Berufseinstieg"], langs: ["Englisch", "Deutsch", "Polnisch"], kw: "startup gründerin founders associate business development nachhaltigkeit climate", quote: "Startups suchen Macher:innen. Wir üben, wie du Ownership greifbar machst.", prep: ["Founders-Associate-Case", "Probeaufgabe strukturieren", "Equity und Gehalt im Startup"], bio: "Zweites Startup, 40 Mitarbeitende. Habe jede einzelne Person selbst interviewt.", rating: 4.9, sessions: 37, years: 9, days: [5, 6], hours: ["09:00", "09:30", "10:00"] },
+    { id: "tb", name: "Thomas Becker", role: "Referatsleiter", org: "Bundesbehörde", ind: "Öffentlicher Dienst", types: ["Assessment Center", "Behavioral / Fit"], levels: ["Berufseinstieg", "Erfahren & Führung"], langs: ["Deutsch"], kw: "öffentlicher dienst verwaltung beamter behörde staat tvöd auswahlverfahren", quote: "Strukturierte Auswahlverfahren folgen Regeln. Kennst du die Regeln, bist du im Vorteil.", prep: ["Strukturiertes Interview simulieren", "Gruppenübung und Postkorb", "Tarif- und Besoldung verstehen"], bio: "Sitze seit zehn Jahren in Auswahlkommissionen und erkläre gern, was hinter den Fragen steckt.", rating: 4.7, sessions: 59, years: 22, days: [2, 4], hours: ["16:00", "16:30", "17:00"] },
+    { id: "ad", name: "Aylin Demir", role: "Senior Associate", org: "Wirtschaftskanzlei", ind: "Recht", types: ["Technisches Interview", "Behavioral / Fit", "Gehaltsverhandlung"], levels: ["Praktikum & Werkstudium", "Berufseinstieg"], langs: ["Deutsch", "Türkisch", "Englisch"], kw: "jura jurist anwalt anwältin referendariat kanzlei law rechtswissenschaft", quote: "Kanzlei-Interviews sind halb Fachgespräch, halb Persönlichkeit. Wir üben beides.", prep: ["Fachfragen aus dem Wirtschaftsrecht", "Referendariats- und Associate-Interviews", "Gehaltsstrukturen in Kanzleien"], bio: "Erste Juristin in meiner Familie. Ich will, dass dein Name nicht über deine Chancen entscheidet.", rating: 4.9, sessions: 52, years: 6, days: [1, 3], hours: ["20:00", "20:30"] },
+    { id: "pw", name: "Paul Wagner", role: "Data Science Lead", org: "Versicherungskonzern", ind: "Tech & Product", types: ["Technisches Interview", "Case Interview"], levels: ["Praktikum & Werkstudium", "Berufseinstieg"], langs: ["Deutsch", "Englisch"], kw: "data science analyst daten python sql machine learning ki statistik", quote: "SQL live, Statistik-Fragen, ein Business-Case: Ich kenne alle drei Runden.", prep: ["SQL-Aufgaben live lösen", "ML-Projekte verständlich erklären", "Analytics-Case"], bio: "Physiker, der in die Datenwelt gewechselt ist. Baue gerade ein Team von zwölf Data Scientists auf.", rating: 4.8, sessions: 70, years: 9, days: [3, 4], hours: ["18:00", "18:30", "19:00"] },
+    { id: "cm", name: "Clara Meyer", role: "CFO", org: "Mittelständische Unternehmensgruppe", ind: "Finance", types: ["Gehaltsverhandlung", "Behavioral / Fit", "Assessment Center"], levels: ["Erfahren & Führung"], langs: ["Deutsch", "Englisch"], kw: "cfo controlling führungskraft executive finanzen leitung bereichsleitung", quote: "Der Sprung in die Führung braucht eine andere Story. Lass sie uns zusammen schreiben.", prep: ["Executive-Interview mit Aufsichtsrat simulieren", "Gehaltspaket verhandeln", "Führungsstil auf den Punkt bringen"], bio: "CFO seit sechs Jahren. Mentoring von Frauen auf dem Weg in Führungspositionen ist mir besonders wichtig.", rating: 5.0, sessions: 33, years: 19, days: [5], hours: ["07:30", "08:00", "17:00"] },
+    { id: "nf", name: "Noah Fischer", role: "Junior Consultant", org: "Wirtschaftsprüfungsgesellschaft", ind: "Consulting", types: ["Case Interview", "Behavioral / Fit", "Assessment Center"], levels: ["Praktikum & Werkstudium", "Berufseinstieg"], langs: ["Deutsch", "Englisch"], kw: "werkstudent praktikum audit prüfung consulting big four berufseinstieg", quote: "Ich hatte mein Interview vor einem Jahr. Ich weiß noch genau, was ich gern vorher gewusst hätte.", prep: ["Peer-Mock-Interview auf Augenhöhe", "Assessment-Center-Tag durchspielen", "Fragen, die du stellen solltest"], bio: "Erste Generation an der Uni, heute im zweiten Jahr Beratung. Locker, ehrlich, ohne Fachchinesisch.", rating: 4.8, sessions: 29, years: 1, days: [0, 2, 4], hours: ["19:00", "19:30", "20:00", "20:30"] },
+    { id: "ea", name: "Elif Arslan", role: "Senior Brand Managerin", org: "Konsumgüterkonzern", ind: "Marketing & Media", types: ["Case Interview", "Behavioral / Fit", "Assessment Center"], levels: ["Praktikum & Werkstudium", "Berufseinstieg"], langs: ["Deutsch", "Türkisch", "Englisch"], kw: "marketing brand manager marke fmcg kommunikation traineeprogramm", quote: "Marketing-Cases sind Storytelling mit Zahlen. Das kann man üben.", prep: ["Marketing-Case: Produktlaunch", "Assessment-Center-Präsentation", "Motivationsfragen schärfen"], bio: "Über das Traineeprogramm eingestiegen, heute verantwortlich für eine Marke mit zweistelligem Millionenumsatz.", rating: 4.7, sessions: 48, years: 7, days: [1, 2], hours: ["18:30", "19:00", "19:30"] }
+  ];
+
+  /* ---------- Helpers ---------- */
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const initials = n => n.replace("Dr. ", "").split(" ").map(p => p[0]).join("").slice(0, 2);
+  const hash = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
+  const colorOf = m => COLORS[hash(m.id) % COLORS.length];
+  const WD = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+  const WD_LONG = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+  const MON = ["Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sep.", "Okt.", "Nov.", "Dez."];
+  const ymd = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const fmtDay = d => `${WD_LONG[d.getDay()]}, ${d.getDate()}. ${MON[d.getMonth()]}`;
+  const parseDay = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+
+  const store = {
+    get() { try { return JSON.parse(localStorage.getItem("ruhepuls.bookings") || "[]"); } catch { return []; } },
+    set(v) { try { localStorage.setItem("ruhepuls.bookings", JSON.stringify(v)); } catch {} }
+  };
+  let bookings = store.get();
+
+  const DAYS_AHEAD = 14;
+  function slotsFor(m) {
+    const out = [];
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    for (let i = 1; i <= DAYS_AHEAD; i++) {
+      const d = new Date(today); d.setDate(today.getDate() + i);
+      if (!m.days.includes(d.getDay())) continue;
+      const key = ymd(d);
+      const times = m.hours.filter(t => hash(m.id + key + t) % 10 > 2) // ein paar Slots wirken "schon vergeben"
+        .filter(t => !bookings.some(b => b.mentor === m.id && b.date === key && b.time === t));
+      out.push({ date: key, d, times });
+    }
+    return out;
+  }
+  const nextSlot = m => { for (const s of slotsFor(m)) if (s.times.length) return { date: s.date, d: s.d, time: s.times[0] }; return null; };
+  const daysUntil = d => Math.round((d - new Date(new Date().setHours(0, 0, 0, 0))) / 864e5);
+
+  const toast = (msg) => { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 2600); };
+
+  /* ---------- Filter state ---------- */
+  const state = { q: "", ind: "", types: new Set(), levels: new Set(), langs: new Set(), soon: false, sort: "soon" };
+
+  function fillSelect(sel, withAll) {
+    sel.innerHTML = (withAll ? `<option value="">Alle Bereiche</option>` : "") + INDUSTRIES.map(i => `<option>${esc(i)}</option>`).join("");
+  }
+  fillSelect($("#heroInd"), true); fillSelect($("#ind"), true); fillSelect($("#bInd"), false);
+
+  function chipGroup(el, items, set) {
+    el.innerHTML = items.map(i => `<button type="button" class="chip" aria-pressed="false" data-v="${esc(i)}">${esc(i)}</button>`).join("");
+    el.addEventListener("click", e => {
+      const b = e.target.closest(".chip"); if (!b) return;
+      const v = b.dataset.v;
+      set.has(v) ? set.delete(v) : set.add(v);
+      b.setAttribute("aria-pressed", set.has(v));
+      render();
+    });
+  }
+  chipGroup($("#typeChips"), TYPES, state.types);
+  chipGroup($("#levelChips"), LEVELS, state.levels);
+  chipGroup($("#langChips"), LANGS, state.langs);
+
+  const QUICK = [["Consulting-Praktikum", "consulting", "Consulting"], ["Software Engineer", "software", ""], ["Ausbildung", "ausbildung", ""], ["Pflege", "pflege", ""], ["Gehaltsverhandlung", "gehalt", ""], ["Assessment Center", "assessment", ""]];
+  $("#quickChips").insertAdjacentHTML("beforeend", QUICK.map(([l], i) => `<button type="button" class="chip" data-i="${i}">${esc(l)}</button>`).join(""));
+  $("#quickChips").addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    const [, q, ind] = QUICK[+b.dataset.i];
+    applySearch(q, ind);
+  });
+
+  function applySearch(q, ind) {
+    state.q = q; state.ind = ind;
+    $("#q").value = q; $("#ind").value = ind; $("#heroQ").value = q; $("#heroInd").value = ind;
+    render();
+    $("#finden").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+  $("#heroSearch").addEventListener("submit", e => { e.preventDefault(); applySearch($("#heroQ").value.trim(), $("#heroInd").value); });
+  $("#q").addEventListener("input", e => { state.q = e.target.value.trim(); render(); });
+  $("#ind").addEventListener("change", e => { state.ind = e.target.value; render(); });
+  $("#soon").addEventListener("change", e => { state.soon = e.target.checked; render(); });
+  $("#sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+  function resetAll() {
+    state.q = ""; state.ind = ""; state.soon = false; state.types.clear(); state.levels.clear(); state.langs.clear();
+    $("#q").value = ""; $("#ind").value = ""; $("#soon").checked = false; $("#heroQ").value = ""; $("#heroInd").value = "";
+    document.querySelectorAll(".filters .chip").forEach(c => c.setAttribute("aria-pressed", "false"));
+    render();
+  }
+  $("#resetFilters").addEventListener("click", resetAll);
+  $("#emptyReset").addEventListener("click", resetAll);
+  $("#filterToggle").addEventListener("click", e => {
+    const f = $("#filters"); const c = f.classList.toggle("collapsed");
+    e.currentTarget.setAttribute("aria-expanded", !c); e.currentTarget.textContent = c ? "Anzeigen" : "Ausblenden";
+  });
+
+  function matches(m) {
+    if (state.ind && m.ind !== state.ind) return false;
+    if (state.types.size && !m.types.some(t => state.types.has(t))) return false;
+    if (state.levels.size && !m.levels.some(t => state.levels.has(t))) return false;
+    if (state.langs.size && !m.langs.some(t => state.langs.has(t))) return false;
+    if (state.soon) { const n = nextSlot(m); if (!n || daysUntil(n.d) > 3) return false; }
+    if (state.q) {
+      const hay = [m.name, m.role, m.org, m.ind, m.kw, m.quote, ...m.types, ...m.levels, ...m.prep].join(" ").toLowerCase();
+      const words = state.q.toLowerCase().split(/\s+/).filter(w => w.length > 1);
+      // mindestens ein Suchwort muss passen, damit Suchen wie "Werkstudent Consulting" breit bleiben
+      if (words.length && !words.some(w => hay.includes(w) || hay.includes(w.replace(/(in|innen|er|en|e)$/, "")))) return false;
+    }
+    return true;
+  }
+
+  function cardHTML(m) {
+    const n = nextSlot(m);
+    const du = n ? daysUntil(n.d) : null;
+    const when = n ? (du === 1 ? "Morgen" : `${WD[n.d.getDay()]}, ${n.d.getDate()}. ${MON[n.d.getMonth()]}`) + ` · ${n.time}` : "Ausgebucht";
+    return `<article class="card">
+      <div class="card-top">
+        <div class="avatar" style="background:${colorOf(m)}">${esc(initials(m.name))}${du !== null && du <= 2 ? '<span class="online" title="Bald verfügbar"></span>' : ""}</div>
+        <div><h3>${esc(m.name)}</h3><div class="role">${esc(m.role)} · ${esc(m.org)}</div></div>
+      </div>
+      <div class="tags"><span class="tag ind">${esc(m.ind)}</span>${m.types.slice(0, 2).map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
+      <p class="card-quote">${esc(m.quote)}</p>
+      <div>
+        <div class="card-meta" style="margin-bottom:12px"><span><b>${m.rating.toFixed(1).replace(".", ",")}</b> ★ Bewertung</span><span><b>${m.sessions}</b> Sessions</span><span>${esc(m.langs.join(", "))}</span></div>
+        <div class="card-foot">
+          <div class="next-slot">Nächster freier Slot<b>${esc(when)}</b></div>
+          <button class="btn btn-primary btn-sm" type="button" data-book="${m.id}">Termin wählen</button>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function render() {
+    let list = MENTORS.filter(matches);
+    const ns = m => { const n = nextSlot(m); return n ? n.d.getTime() + parseInt(n.time) * 36e5 : Infinity; };
+    if (state.sort === "soon") list.sort((a, b) => ns(a) - ns(b));
+    if (state.sort === "rating") list.sort((a, b) => b.rating - a.rating || b.sessions - a.sessions);
+    if (state.sort === "sessions") list.sort((a, b) => b.sessions - a.sessions);
+    $("#cards").innerHTML = list.map(cardHTML).join("");
+    $("#empty").hidden = list.length > 0;
+    $("#count").innerHTML = `${list.length} Mentor:innen <span>${list.length === MENTORS.length ? "verfügbar" : "passen zu deiner Suche"}</span>`;
+  }
+  $("#cards").addEventListener("click", e => { const b = e.target.closest("[data-book]"); if (b) openBooking(b.dataset.book); });
+  $("#mentorCount").textContent = MENTORS.length;
+
+  /* ---------- Booking ---------- */
+  const dlg = $("#bookDlg");
+  let cur = null, selDay = null, selTime = null;
+
+  function openBooking(id) {
+    cur = MENTORS.find(m => m.id === id); selDay = null; selTime = null;
+    $("#mProfile").innerHTML = `
+      <div style="display:flex;gap:16px;align-items:center">
+        <div class="avatar lg" style="background:${colorOf(cur)}">${esc(initials(cur.name))}</div>
+        <div style="min-width:0"><h3 id="mName">${esc(cur.name)}</h3><div class="role">${esc(cur.role)}<br>${esc(cur.org)}</div></div>
+      </div>
+      <div class="stats3"><div><b>${cur.rating.toFixed(1).replace(".", ",")}</b><span>Bewertung</span></div><div><b>${cur.sessions}</b><span>Sessions</span></div><div><b>${cur.years}</b><span>Jahre Erfahrung</span></div></div>
+      <p class="bio">${esc(cur.bio)}</p>
+      <div><div class="m-sub">Darauf bereite ich dich vor</div><ul class="checklist">${cur.prep.map(p => `<li>${esc(p)}</li>`).join("")}</ul></div>
+      <div><div class="m-sub">Formate & Stufen</div><div class="tags"><span class="tag ind">${esc(cur.ind)}</span>${cur.types.map(t => `<span class="tag">${esc(t)}</span>`).join("")}${cur.levels.map(t => `<span class="tag" style="background:var(--mint-soft)">${esc(t)}</span>`).join("")}</div></div>
+      <div class="role">Spricht ${esc(cur.langs.join(", "))}</div>`;
+    $("#bookForm").hidden = false; $("#bookSuccess").hidden = true; $("#bookErr").hidden = true;
+    $("#fMsg").value = state.q ? `Ich bewerbe mich auf: ${state.q}` : "";
+    const first = slotsFor(cur).find(s => s.times.length);
+    selDay = first ? first.date : null;
+    renderDays(); renderSlots(); updateWhen();
+    dlg.showModal();
+    dlg.querySelector(".m-booking").scrollTop = 0;
+  }
+
+  function renderDays() {
+    const s = slotsFor(cur);
+    $("#days").innerHTML = s.map(x => `<button type="button" class="day" data-d="${x.date}" aria-pressed="${x.date === selDay}" ${x.times.length ? "" : "disabled"}>
+      <small>${WD[x.d.getDay()]}</small><b>${x.d.getDate()}</b><i>${x.times.length ? x.times.length + " frei" : "voll"}</i></button>`).join("") || `<p class="role">Aktuell keine Slots frei.</p>`;
+  }
+  function renderSlots() {
+    const day = slotsFor(cur).find(x => x.date === selDay);
+    $("#slotHead").textContent = day ? `Uhrzeit am ${fmtDay(day.d)}` : "Uhrzeit";
+    $("#slots").innerHTML = day ? day.times.map(t => `<button type="button" class="slot" data-t="${t}" aria-pressed="${t === selTime}">${t}</button>`).join("") : "";
+  }
+  function dur() { return dlg.querySelector('input[name="stype"]:checked').value === "mock" ? 30 : 15; }
+  function updateWhen() {
+    const el = $("#whenTxt");
+    if (selDay && selTime) el.innerHTML = `${esc(fmtDay(parseDay(selDay)))} · ${selTime}<span>${dur()} min · kostenlos · jederzeit stornierbar</span>`;
+    else el.innerHTML = `Noch kein Slot gewählt<span>Kostenlos · jederzeit stornierbar</span>`;
+  }
+  $("#days").addEventListener("click", e => { const b = e.target.closest(".day"); if (!b || b.disabled) return; selDay = b.dataset.d; selTime = null; renderDays(); renderSlots(); updateWhen(); });
+  $("#slots").addEventListener("click", e => { const b = e.target.closest(".slot"); if (!b) return; selTime = b.dataset.t; renderSlots(); updateWhen(); $("#bookErr").hidden = true; });
+  $("#segType").addEventListener("change", updateWhen);
+
+  function calLink(b) {
+    const d = parseDay(b.date); const [h, mi] = b.time.split(":").map(Number);
+    const s = new Date(d); s.setHours(h, mi); const e = new Date(s.getTime() + b.dur * 6e4);
+    const f = x => `${ymd(x).replace(/-/g, "")}T${String(x.getHours()).padStart(2, "0")}${String(x.getMinutes()).padStart(2, "0")}00`;
+    const p = new URLSearchParams({ action: "TEMPLATE", text: `Interview-Prep mit ${b.mentorName} (ruhepuls)`, dates: `${f(s)}/${f(e)}`, ctz: "Europe/Berlin", details: `${b.typeLabel} · ${b.fmt}\nGebucht über ruhepuls (Demo)` });
+    return `https://calendar.google.com/calendar/render?${p}`;
+  }
+
+  $("#bookForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const err = $("#bookErr");
+    const name = $("#fName").value.trim(), mail = $("#fMail").value.trim();
+    let msg = "";
+    if (!selTime) msg = "Wähl bitte noch eine Uhrzeit aus.";
+    else if (!name) msg = "Wie dürfen wir dich nennen? Trag deinen Vornamen ein.";
+    else if (!/^\S+@\S+\.\S+$/.test(mail)) msg = "Die E-Mail-Adresse sieht unvollständig aus. Dorthin schicken wir den Call-Link.";
+    if (msg) { err.textContent = msg; err.hidden = false; return; }
+    const stype = dlg.querySelector('input[name="stype"]:checked').value;
+    const b = {
+      id: "RP-" + Math.random().toString(36).slice(2, 7).toUpperCase(),
+      mentor: cur.id, mentorName: cur.name, date: selDay, time: selTime, dur: dur(),
+      typeLabel: stype === "mock" ? "Mock-Interview" : "Quick-Check",
+      fmt: dlg.querySelector('input[name="fmt"]:checked').value, name, mail, msg: $("#fMsg").value.trim()
+    };
+    bookings.push(b); store.set(bookings); updateBadge(); render();
+    $("#bookForm").hidden = true;
+    const s = $("#bookSuccess"); s.hidden = false;
+    s.innerHTML = `
+      <div class="success-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#0E0F1E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+      <h4 style="padding-right:40px">Gebucht, ${esc(name)}! Atme durch.</h4>
+      <p class="role">${esc(cur.name.replace("Dr. ", "").split(" ")[0])} freut sich auf dich. In der echten Version kommt jetzt eine Bestätigung an <b>${esc(mail)}</b>.</p>
+      <div class="ticket">
+        <div><span>Mentor:in</span><b>${esc(cur.name)}</b></div>
+        <div><span>Wann</span><b>${esc(fmtDay(parseDay(b.date)))}, ${b.time} Uhr</b></div>
+        <div><span>Session</span><b>${b.typeLabel} · ${b.dur} min</b></div>
+        <div><span>Format</span><b>${esc(b.fmt)}</b></div>
+        <div><span>Buchungsnummer</span><b><code>${b.id}</code></b></div>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-sun" href="${calLink(b)}" target="_blank" rel="noopener">In Google Kalender eintragen</a>
+        <button class="btn btn-ghost" type="button" data-close>Fertig</button>
+      </div>
+      <p class="role" style="font-size:14px">Tipp: Mach kurz vor dem Termin den <a href="#ruhe" data-close>Ruhe-Check</a>.</p>`;
+    toast("Termin gebucht");
+  });
+
+  document.addEventListener("click", e => { const c = e.target.closest("[data-close]"); if (c) c.closest("dialog").close(); });
+  [dlg, $("#termineDlg")].forEach(d => d.addEventListener("click", e => { if (e.target === d) d.close(); }));
+
+  /* ---------- Meine Termine ---------- */
+  function updateBadge() { const b = $("#termineCount"); b.textContent = bookings.length; b.hidden = !bookings.length; }
+  function renderTermine() {
+    const l = $("#termineList");
+    if (!bookings.length) { l.innerHTML = `<p class="role">Noch keine Termine. Such dir unter <a href="#finden" data-close>Mentor:innen finden</a> jemanden aus und buch deinen ersten kostenlosen Slot.</p>`; return; }
+    l.innerHTML = [...bookings].sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)).map(b => {
+      const m = MENTORS.find(x => x.id === b.mentor) || { id: b.mentor, name: b.mentorName };
+      return `<div class="booking-item"><div class="avatar" style="background:${colorOf(m)}">${esc(initials(m.name))}</div>
+        <div><div class="w">${esc(fmtDay(parseDay(b.date)))} · ${b.time}</div><b>${esc(b.mentorName)}</b><br><small>${esc(b.typeLabel)} · ${esc(b.fmt)} · <a href="${calLink(b)}" target="_blank" rel="noopener">Kalender</a></small></div>
+        <button class="link-btn" type="button" data-cancel="${b.id}" style="color:var(--coral)">Stornieren</button></div>`;
+    }).join("");
+  }
+  $("#openTermine").addEventListener("click", () => { renderTermine(); $("#termineDlg").showModal(); });
+  $("#termineList").addEventListener("click", e => {
+    const c = e.target.closest("[data-cancel]"); if (!c) return;
+    bookings = bookings.filter(b => b.id !== c.dataset.cancel); store.set(bookings); updateBadge(); renderTermine(); render(); toast("Termin storniert, der Slot ist wieder frei");
+  });
+
+  /* ---------- Mentor werden ---------- */
+  const bDays = new Set();
+  $("#bDays").innerHTML = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map(d => `<button type="button" class="chip" aria-pressed="false" data-v="${d}">${d}</button>`).join("");
+  $("#bDays").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; const v = b.dataset.v; bDays.has(v) ? bDays.delete(v) : bDays.add(v); b.setAttribute("aria-pressed", bDays.has(v)); });
+  $("#becomeForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const err = $("#bErr");
+    if (!$("#bName").value.trim() || !$("#bRole").value.trim()) { err.textContent = "Name und Rolle brauchen wir für dein Profil."; err.hidden = false; return; }
+    if (!/^\S+@\S+\.\S+$/.test($("#bMail").value.trim())) { err.textContent = "Bitte gib eine gültige E-Mail-Adresse an."; err.hidden = false; return; }
+    if (!bDays.size) { err.textContent = "Wähl mindestens einen Tag, an dem du Zeit hast."; err.hidden = false; return; }
+    err.hidden = true; $("#bSuccess").hidden = false; e.target.querySelector('button[type="submit"]').hidden = true;
+    toast("Bewerbung als Mentor:in erhalten");
+  });
+
+  /* ---------- Box Breathing ---------- */
+  const PHASES = [["Einatmen", true], ["Halten", true], ["Ausatmen", false], ["Halten", false]];
+  let breathTimer = null;
+  function stopBreath(msg) {
+    clearInterval(breathTimer); breathTimer = null;
+    $("#blob").classList.remove("in"); $("#breathCount").textContent = "4";
+    $("#breathText").textContent = msg || "Bereit, wenn du es bist."; $("#breathBtn").textContent = "Übung starten";
+  }
+  $("#breathBtn").addEventListener("click", () => {
+    if (breathTimer) return stopBreath();
+    let tick = 0; const total = 64;
+    $("#breathBtn").textContent = "Stopp";
+    const step = () => {
+      if (tick >= total) return stopBreath("Gut gemacht. Dein Puls dankt dir.");
+      const phase = Math.floor(tick / 4) % 4, sec = 4 - (tick % 4);
+      $("#breathText").textContent = `${PHASES[phase][0]} · Runde ${Math.floor(tick / 16) + 1}/4`;
+      $("#breathCount").textContent = sec;
+      $("#blob").classList.toggle("in", PHASES[phase][1]);
+      tick++;
+    };
+    step(); breathTimer = setInterval(step, 1000);
+  });
+
+  /* ---------- ECG ---------- */
+  const cv = $("#ecg"), ctx = cv.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W = 0, H = 0;
+  function size() { const r = cv.getBoundingClientRect(), dpr = devicePixelRatio || 1; W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  size(); addEventListener("resize", size);
+  // Ein Herzschlag als Funktion von Phase p in [0,1)
+  function beat(p, stress) {
+    const a = stress;
+    if (p < .08) return Math.sin(p / .08 * Math.PI) * 0.12 * a;
+    if (p < .12) return 0;
+    if (p < .14) return -0.18 * a;
+    if (p < .18) return (1 - Math.abs((p - .16) / .02)) * 1.0 * (0.45 + 0.55 * a);
+    if (p < .21) return -0.28 * a;
+    if (p < .32) return 0;
+    if (p < .45) return Math.sin((p - .32) / .13 * Math.PI) * 0.2;
+    return 0;
+  }
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  let t0 = performance.now();
+  const CYCLE = 9000; // ms: stressig -> ruhig -> zurück
+  function stressAt(ms) { const p = (ms % CYCLE) / CYCLE; if (p < .35) return 1; if (p < .55) return 1 - (p - .35) / .2; if (p < .9) return 0; return (p - .9) / .1; }
+  function draw(now) {
+    const ms = reduce ? 0 : now - t0;
+    ctx.clearRect(0, 0, W, H);
+    // Raster
+    ctx.strokeStyle = css("--bg"); ctx.globalAlpha = .08; ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 20) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 20) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+    ctx.globalAlpha = 1;
+    const mid = H * .6, amp = H * .5;
+    ctx.lineWidth = 2.5; ctx.lineJoin = "round"; ctx.lineCap = "round";
+    // Stress -> Puls
+    const st = reduce ? null : stressAt(ms);
+    let phaseAcc = 0;
+    const coral = css("--coral"), mint = css("--mint");
+    const grad = ctx.createLinearGradient(0, 0, W, 0);
+    if (reduce) { grad.addColorStop(0, coral); grad.addColorStop(.5, coral); grad.addColorStop(.5, mint); grad.addColorStop(1, mint); }
+    else { const c = st > .5 ? coral : mint; grad.addColorStop(0, css("--bg")); grad.addColorStop(.25, c); grad.addColorStop(1, c); }
+    ctx.strokeStyle = grad;
+    ctx.beginPath();
+    const pxPerSec = 110, scroll = ms / 1000 * pxPerSec;
+    for (let x = 0; x <= W; x += 1.5) {
+      // Zeit, die dieser Pixel repräsentiert (rechts = jetzt)
+      const tt = reduce ? x : (scroll - (W - x));
+      const s = reduce ? (x < W / 2 ? 1 : 0) : stressAt(tt / pxPerSec * 1000);
+      const bpm = 72 + 46 * s;
+      const period = 60 / bpm * pxPerSec;
+      const p = (((tt / period) % 1) + 1) % 1;
+      const jitter = s * Math.sin(tt * .9) * .03;
+      const y = mid - (beat(p, .35 + .65 * s) + jitter) * amp;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    if (!reduce) {
+      const bpm = Math.round(72 + 46 * st);
+      $("#bpm").textContent = bpm;
+      const pill = $("#statePill"), calm = st < .5;
+      if (pill.classList.contains("calm") !== calm) { pill.classList.toggle("calm", calm); pill.textContent = calm ? "Nach der Prep" : "Ohne Prep"; }
+      requestAnimationFrame(draw);
+    } else {
+      $("#bpm").textContent = "118 → 72"; $("#statePill").textContent = "Vorher / nachher";
+    }
+  }
+  requestAnimationFrame(draw);
+
+  updateBadge();
+  render();
+})();
+</script>
+</body>
+</html>
